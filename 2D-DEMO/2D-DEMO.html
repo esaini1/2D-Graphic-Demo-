@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+<head>
+  <title>2D-DEMO.html</title>
+  <meta charset = "UTF-8" />
+  <style type = "text/css">
+    .hidden{
+      display: none;
+    }
+    body {
+      background-color: #cccccc;
+    }
+  </style>
+  <script type = "text/javascript">
+  var x = 300;
+  var y = 0;
+  var dx = 0;
+  var dy = 0;
+  CANV_HEIGHT = 500;
+  CANV_WIDTH = 500;
+  SPR_HEIGHT = 200;
+  SPR_WIDTH = 200;
+  var endX = 100;
+  var endY = 100;
+  var OFF_X = 100;
+  var OFF_Y = 100;
+
+  function init(){
+  setInterval(draw, 50);
+  }
+
+    function getCoords(e){
+      endX = e.pageX - OFF_X;
+      endY = e.pageY - OFF_Y;
+
+      if (endX > 150 && endY < 200){
+        console.log(endX, endY, "Top Right");
+        dx = -25;
+        dy = 0;
+      }
+      if (endX < 150 && endY < 200){
+        console.log(endX, endY, "Top Left");
+        dx = 0;
+        dy = 25;
+      }
+      if (endX < 150 && endY > 200){
+        console.log(endX, endY, "Bottom Left");
+        dx = 25;
+        dy = 0;
+      }
+      if (endX > 150 && endY > 200){
+         console.log(endX, endY, "Bottom Right");
+         dx = 0;
+        dy = -25;
+      } 
+    } 
+
+  function draw(){
+    var drawing = document.getElementById("drawing");
+    var con = drawing.getContext("2d");
+    var Elephant = document.getElementById("Elephant");
+      document.onmousedown = getCoords;
+    x += dx;
+    y += dy;
+
+    //clear background
+      con.fillRect(0, 0, CANV_HEIGHT, CANV_WIDTH);
+      
+      //Sky
+      con.fillStyle = "#36b2e3";
+      con.fillRect(0, 0, 500, 150);
+
+      //Tree 1
+      //branch
+      con.fillStyle = "#725c42";
+      con.fillRect(40, 80, 20, 80);
+      //bark
+      con.fillStyle = "#3A5F0B";
+      con.beginPath();
+      con.arc(50, 90, 40, 80, Math.PI*2, true);
+      con.closePath();
+      con.fill();
+      
+      //Tree 2
+      //branch
+       con.fillStyle = "#725c42";
+      con.fillRect(290, 80, 20, 80);
+      //leaves
+      con.fillStyle = "#3A5F0B";
+      con.beginPath();
+      con.arc(300, 90, 40, 80, Math.PI*2, true);
+      con.closePath();
+      con.fill();
+
+      //Tree 3
+      //branch
+      con.fillStyle = "#725c42";
+      con.fillRect(200, 350, 20, 80);
+      //leaves
+      con.fillStyle = "#3A5F0B";
+      con.beginPath();
+      con.arc(210, 360, 40, 80, Math.PI*2, true);
+      con.closePath();
+      con.fill();
+
+      //Tree 4
+      //branch
+      con.fillStyle = "#725c42";
+      con.fillRect(460, 350, 20, 80);
+      //leaves
+      con.fillStyle = "#3A5F0B";
+      con.beginPath();
+      con.arc(470, 360, 40, 80, Math.PI*2, true);
+      con.closePath();
+      con.fill();
+
+      //Text
+      con.fillStyle = "orange";
+      con.font = "20pt sans-serif";
+      con.fillText("Elephants are scared of Mice!!", 50, 250);
+
+      //Elephant
+      con.drawImage(Elephant, x, y, SPR_HEIGHT, SPR_WIDTH);
+
+      //Grass
+      con.fillStyle = "GREEN";
+      
+      boundary();
+  } // end draw    
+
+  function boundary(){
+    if (x > (CANV_WIDTH) - (SPR_WIDTH)){
+      dx = 0;
+    }
+    if (x < 0){
+      dx = 0;
+    } 
+    if (y > (CANV_HEIGHT) - (SPR_HEIGHT)){
+     dy = 0;
+    } 
+    if (y < 0){
+      dy = 0;
+    }
+  } // end boundry
+
+  </script>
+</head>
+
+<body onload = "init()">
+
+  <h1>Click the Elephant!</h1>
+
+  <img class = "hidden"
+       id = "Elephant"
+       src = "Elephant.png"
+       alt = "Picture of an Elephant" />
+
+  <canvas id = "drawing"
+          height = "500"
+          width = "500">
+    <p>Canvas not supported</p>
+  </canvas>
+
+</body>
+</html>
